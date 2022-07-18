@@ -6,11 +6,11 @@ type CrimeHeadingProps = {
 };
 
 const CrimeHeading: React.FC<CrimeHeadingProps> = ({ text }) => {
-  const navigate = useRouter();
+  const router = useRouter();
   return (
     <>
       <Heading
-        onClick={() => navigate('/')}
+        onClick={() => router.push('/')}
         cursor={'pointer'}
         fontSize={'2xl'}
         color={'white'}
