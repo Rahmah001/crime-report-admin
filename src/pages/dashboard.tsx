@@ -22,6 +22,7 @@ import {
 import Head from 'next/head';
 
 import AllCrimesTab from 'src/components/AllCrimesTab/AllCrimesTab';
+import AttendedToCrimesTab from 'src/components/AttendedToCrimesTab/AttendedToCrimesTab';
 
 import { useAppStore } from 'src/store';
 
@@ -69,8 +70,11 @@ const Dashboard = () => {
             <Tab fontSize={'sm'}>Attended Crimes</Tab>
           </TabList>
           <TabPanels>
-            <TabPanel px={0}>
+            <TabPanel px={0} py={6}>
               <AllCrimesTab />
+            </TabPanel>
+            <TabPanel px={0} py={6}>
+              <AttendedToCrimesTab />
             </TabPanel>
           </TabPanels>
         </Tabs>
