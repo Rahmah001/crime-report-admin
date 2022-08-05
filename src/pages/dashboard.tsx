@@ -21,11 +21,13 @@ import Head from 'next/head';
 import { useEffect } from 'react';
 
 import AllCrimesTab from 'src/components/AllCrimesTab/AllCrimesTab';
+import { firestoreDb } from 'src/libs';
 
-import { useStore } from 'src/store';
+import { useAppStore } from 'src/store';
+// import { fetchCrimes } from 'src/store/actions';
 
 const Dashboard = () => {
-  const { fetchCrimes, user } = useStore();
+  const fetchCrimes = useAppStore((state) => state.fetchCrimes);
 
   useEffect(() => {
     fetchCrimes();
