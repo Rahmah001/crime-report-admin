@@ -11,7 +11,7 @@ export type AppStore = {
   isLoadingCrime: boolean | undefined;
   isLoadingUser: boolean | undefined;
   fetchCrimes: () => void;
-  fetchCrimeAttendedTo: () => void;
+  fetchCrimesAttendedTo: () => void;
   loginAdmin: (user: Admin) => void;
 };
 
