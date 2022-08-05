@@ -1,18 +1,18 @@
 import create from 'zustand';
-import { devtools, persist } from 'zustand/middleware';
 
+import toast from 'react-hot-toast';
 import Router from 'next/router';
+
+import { devtools, persist } from 'zustand/middleware';
 
 import { AuthError, getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 import { query, collection, getDocs, FirestoreError } from 'firebase/firestore';
 
-import toast from 'react-hot-toast';
-
 import { firestoreDb } from 'src/libs';
-import { AppState, Admin } from 'src/types';
+import { AppStore, Admin } from 'src/types';
 
-const useAppStore = create<AppState>()(
+const useAppStore = create<AppStore>()(
   devtools(
     persist(
       (set) => ({
@@ -24,7 +24,7 @@ const useAppStore = create<AppState>()(
         // methods
         loginAdmin: ({ email, password }: Admin) => {
           const auth = getAuth();
-          set((state) => ({ isLoadingUser: (state.isLoadingUser = true) }));
+          set((state) => ({ ...state, isLoadingUser: true }));
           signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
               const user = userCredential.user;
