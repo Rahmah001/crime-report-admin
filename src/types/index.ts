@@ -3,7 +3,7 @@ import { DocumentData } from 'firebase/firestore';
 
 export type Admin = { email: string; password: string };
 
-export type AppState = {
+export type AppStore = {
   user: User | null;
   crimes: DocumentData[] | [] | null;
   isLoadingCrime: boolean | undefined;
