@@ -36,7 +36,6 @@ const useAppStore = create<AppState>()(
               Router.push('/dashboard');
             })
             .catch((error: AuthError) => {
-              console.log(error);
               set((state) => ({ ...state, isLoadingUser: false }));
               toast.error(`${error.message}`, {
                 position: 'bottom-center',
@@ -61,7 +60,6 @@ const useAppStore = create<AppState>()(
             })
             .catch((error: FirestoreError) => {
               set((state) => ({ ...state, isLoadingCrime: false }));
-              console.log(error);
               toast.error(`${error.message}`, {
                 position: 'bottom-center',
               });

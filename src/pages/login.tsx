@@ -28,10 +28,6 @@ const Login: NextPage = () => {
   const user = useAppStore((state) => state.user);
   const loginAdmin = useAppStore((state) => state.loginAdmin);
 
-  useEffect(() => {
-    console.log('useEffect', user);
-  }, []);
-
   const handleUserLogin: SubmitHandler<Admin> = (data) => {
     const { email, password } = data;
     loginAdmin({ email, password });

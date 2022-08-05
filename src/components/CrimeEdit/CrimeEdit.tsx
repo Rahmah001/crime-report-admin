@@ -29,10 +29,6 @@ const CrimeEdit: React.FC<{ crime: QueryDocumentSnapshot<DocumentData> }> = ({
   const { register, handleSubmit } = useForm();
   const { onOpen, onClose, isOpen } = useDisclosure();
 
-  useEffect(() => {
-    console.log('useEffect', crime);
-  });
-
   const handleCrimeEdit = (data: any) => {
     const newData = {
       crime: data.crime,
@@ -41,7 +37,6 @@ const CrimeEdit: React.FC<{ crime: QueryDocumentSnapshot<DocumentData> }> = ({
       phoneNumber: data.phoneNumber,
       attendedTo: data.attendedTo,
     };
-    console.log(newData);
   };
   return (
     <Box>

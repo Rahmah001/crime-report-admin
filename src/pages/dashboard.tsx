@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import {
   Avatar,
   Badge,
@@ -18,10 +20,8 @@ import {
   Text,
 } from '@chakra-ui/react';
 import Head from 'next/head';
-import { useEffect } from 'react';
 
 import AllCrimesTab from 'src/components/AllCrimesTab/AllCrimesTab';
-import { firestoreDb } from 'src/libs';
 
 import { useAppStore } from 'src/store';
 // import { fetchCrimes } from 'src/store/actions';
