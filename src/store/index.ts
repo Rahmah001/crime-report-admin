@@ -7,7 +7,13 @@ import { devtools, persist } from 'zustand/middleware';
 
 import { AuthError, getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
-import { query, collection, getDocs, FirestoreError } from 'firebase/firestore';
+import {
+  query,
+  collection,
+  getDocs,
+  FirestoreError,
+  where,
+} from 'firebase/firestore';
 
 import { firestoreDb } from 'src/libs';
 import { AppStore, Admin } from 'src/types';
@@ -17,6 +23,7 @@ const useAppStore = create<AppStore>()(
     persist(
       (set) => ({
         crimes: null,
+        attendedToCrimes: null,
         isLoadingCrime: false,
         isLoadingUser: false,
         user: null,
@@ -54,6 +61,32 @@ const useAppStore = create<AppStore>()(
               set((state) => ({
                 ...state,
                 crimes: snapshot?.docs.map((doc) => {
+                  return { ...doc.data(), id: doc.id };
+                }),
+              }));
+            })
+            .catch((error: FirestoreError) => {
+              set((state) => ({ ...state, isLoadingCrime: false }));
+              toast.error(`${error.message}`, {
+                position: 'bottom-center',
+              });
+            });
+        },
+        fetchCrimesAttendedTo: async () => {
+          set((state) => ({ ...state, isLoadingCrime: true }));
+          const attentedCrimeQuery = query(
+            collection(firestoreDb, 'crimes'),
+            where('attendedTo', '==', true)
+          );
+          await getDocs(attentedCrimeQuery)
+            .then((snapshot) => {
+              set((state) => ({
+                ...state,
+                isLoadingCrime: false,
+              }));
+              set((state) => ({
+                ...state,
+                attendedToCrimes: snapshot?.docs.map((doc) => {
                   return { ...doc.data(), id: doc.id };
                 }),
               }));
