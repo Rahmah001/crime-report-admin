@@ -25,7 +25,6 @@ import { overlayBg, bgGradient, buttonGradient } from 'src/constants';
 const Login: NextPage = () => {
   const { register, handleSubmit } = useForm<Admin>();
   const isLoading = useAppStore((state) => state.isLoadingUser);
-  const user = useAppStore((state) => state.user);
   const loginAdmin = useAppStore((state) => state.loginAdmin);
 
   const handleUserLogin: SubmitHandler<Admin> = (data) => {
@@ -61,7 +60,7 @@ const Login: NextPage = () => {
             <Input
               bgColor={'white'}
               borderRadius={'md'}
-              type="text"
+              type="password"
               {...register('password', {
                 required: true,
               })}
