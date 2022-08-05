@@ -3,11 +3,11 @@ import { devtools, persist } from 'zustand/middleware';
 
 import Router from 'next/router';
 
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { AuthError, getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
-import { query, collection, getDocs } from 'firebase/firestore';
+import { query, collection, getDocs, FirestoreError } from 'firebase/firestore';
 
-import { toast } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 import { firestoreDb } from 'src/libs';
 import { AppState, Admin } from 'src/types';
@@ -30,11 +30,17 @@ const useAppStore = create<AppState>()(
               const user = userCredential.user;
               set((state) => ({ ...state, user: user }));
               set((state) => ({ ...state, isLoadingUser: false }));
+              toast.success('Login successful', {
+                position: 'bottom-center',
+              });
               Router.push('/dashboard');
             })
-            .catch((error) => {
+            .catch((error: AuthError) => {
               console.log(error);
               set((state) => ({ ...state, isLoadingUser: false }));
+              toast.error(`${error.message}`, {
+                position: 'bottom-center',
+              });
             });
         },
         fetchCrimes: async () => {
@@ -53,9 +59,12 @@ const useAppStore = create<AppState>()(
                 }),
               }));
             })
-            .catch((err) => {
+            .catch((error: FirestoreError) => {
               set((state) => ({ ...state, isLoadingCrime: false }));
-              console.log(err);
+              console.log(error);
+              toast.error(`${error.message}`, {
+                position: 'bottom-center',
+              });
             });
         },
       }),
