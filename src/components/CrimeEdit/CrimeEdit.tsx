@@ -1,4 +1,5 @@
 import { EditIcon } from '@chakra-ui/icons';
+
 import {
   IconButton,
   Box,
@@ -7,7 +8,6 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  chakra,
   ModalCloseButton,
   ModalBody,
   SimpleGrid,
@@ -15,19 +15,19 @@ import {
   ModalFooter,
   ButtonGroup,
   Button,
-  Text,
   Select,
   Checkbox,
 } from '@chakra-ui/react';
-import { DocumentData, QueryDocumentSnapshot } from 'firebase/firestore';
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 
-const CrimeEdit: React.FC<{ crime: QueryDocumentSnapshot<DocumentData> }> = ({
-  crime,
-}) => {
+import { useForm } from 'react-hook-form';
+import { crimeType } from 'src/data';
+import { CrimeProps } from 'src/types';
+
+const CrimeEdit: React.FC<CrimeProps> = ({ crime }) => {
   const { register, handleSubmit } = useForm();
   const { onOpen, onClose, isOpen } = useDisclosure();
+  const [isAttendedTo, setIsAttendedTo] = useState<boolean>(crime.isAttendedTo);
 
   const handleCrimeEdit = (data: any) => {
     const newData = {
@@ -37,13 +37,14 @@ const CrimeEdit: React.FC<{ crime: QueryDocumentSnapshot<DocumentData> }> = ({
       phoneNumber: data.phoneNumber,
       attendedTo: data.attendedTo,
     };
+    console.log(newData);
   };
   return (
     <Box>
       <IconButton
         aria-label="edit-button"
-        size="sm"
-        colorScheme="secondary"
+        size="xs"
+        colorScheme="pink"
         variant="ghost"
         onClick={onOpen}
         icon={<EditIcon />}
@@ -56,10 +57,10 @@ const CrimeEdit: React.FC<{ crime: QueryDocumentSnapshot<DocumentData> }> = ({
         motionPreset="slideInBottom"
         closeOnOverlayClick={false}
       >
-        <ModalOverlay />
+        <ModalOverlay backdropFilter={'blur(4px)'} />
         <ModalContent>
           <ModalHeader fontSize={'sm'}>
-            Edit {crime?.data().name} reported crime on {crime?.data().crime}
+            Edit {crime?.name} reported crime on {crime?.crime}
           </ModalHeader>
           <ModalCloseButton size="sm" />
           <form onSubmit={handleSubmit(handleCrimeEdit)}>
@@ -74,7 +75,7 @@ const CrimeEdit: React.FC<{ crime: QueryDocumentSnapshot<DocumentData> }> = ({
                     required: true,
                   })}
                   size={'sm'}
-                  value={crime?.data().name || ''}
+                  value={crime?.name || ''}
                   type="text"
                   rounded={'md'}
                   placeholder="Name"
@@ -84,7 +85,7 @@ const CrimeEdit: React.FC<{ crime: QueryDocumentSnapshot<DocumentData> }> = ({
                     pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                   })}
                   size={'sm'}
-                  value={crime?.data().email || ''}
+                  value={crime?.email || ''}
                   type="email"
                   rounded={'md'}
                   placeholder="Email Address"
@@ -92,36 +93,41 @@ const CrimeEdit: React.FC<{ crime: QueryDocumentSnapshot<DocumentData> }> = ({
                 <Select
                   {...register('crime')}
                   placeholder="Select crime"
-                  value={crime?.data().crime || ''}
+                  value={crime?.crime || ''}
                   rounded={'md'}
                   size={'sm'}
                 >
-                  <option>Armed Robbery</option>
-                  <option>Murder</option>
-                  <option>Kidnapping</option>
-                  <option>Bugling</option>
-                  <option>Hijacking</option>
-                  <option>Accident</option>
+                  {crimeType.map((crime) => (
+                    <option key={crime}>{crime}</option>
+                  ))}
                 </Select>
                 <Input
                   {...register('phoneNumber', {})}
                   size={'sm'}
-                  value={crime?.data().phoneNumber || ''}
+                  value={crime?.phoneNumber || ''}
                   type="text"
                   rounded={'md'}
                   placeholder="Name"
                 />
                 <Checkbox
                   {...register('attendedTo')}
-                  isChecked={crime?.data().attendedTo || false}
+                  size={'md'}
+                  isChecked={isAttendedTo}
+                  onChange={() => setIsAttendedTo(!isAttendedTo)}
+                  colorScheme={'pink'}
                 >
-                  Crime is Attended to
+                  Crime is attended to?
                 </Checkbox>
               </SimpleGrid>
             </ModalBody>
             <ModalFooter>
               <ButtonGroup mt={4} spacing={2}>
-                <Button size="sm" type="submit" variant="solid">
+                <Button
+                  colorScheme={'purple'}
+                  size="xs"
+                  type="submit"
+                  variant="solid"
+                >
                   Edit Crime
                 </Button>
               </ButtonGroup>
