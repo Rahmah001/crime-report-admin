@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   Center,
@@ -22,9 +22,15 @@ import { CrimeType } from 'src/types';
 
 const AttendedToCrimeTab = () => {
   const isLoading = useAppStore((state) => state.isLoadingCrime);
-  const crimes = useAppStore((state) => state.crimes);
+  const attendedToCrimes = useAppStore((state) => state.attendedToCrimes);
 
   const [crimesState, setCrimesState] = useState<CrimeType>([]);
+
+  useEffect(() => {
+    setCrimesState(attendedToCrimes);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Box>
       {isLoading && (
