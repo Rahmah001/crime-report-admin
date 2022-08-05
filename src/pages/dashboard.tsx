@@ -28,9 +28,13 @@ import { useAppStore } from 'src/store';
 
 const Dashboard = () => {
   const fetchCrimes = useAppStore((state) => state.fetchCrimes);
+  const fetchCrimesAttendedTo = useAppStore(
+    (state) => state.fetchCrimesAttendedTo
+  );
 
   useEffect(() => {
     fetchCrimes();
+    fetchCrimesAttendedTo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
