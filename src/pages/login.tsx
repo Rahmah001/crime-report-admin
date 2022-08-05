@@ -1,4 +1,7 @@
 import { useEffect } from 'react';
+import Head from 'next/head';
+
+import type { NextPage } from 'next';
 
 import {
   Box,
@@ -14,21 +17,22 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import CrimeHeading from 'src/components/CrimeHeading/CrimeHeading';
 
-import { useStore } from 'src/store';
-import { formData } from 'src/types';
+import { useAppStore } from 'src/store';
+
+import { Admin } from 'src/types';
 import { overlayBg, bgGradient, buttonGradient } from 'src/constants';
-import Head from 'next/head';
 
-const Login = () => {
-  const { register, handleSubmit } = useForm<formData>();
-
-  const { isLoadingUser, loginAdmin, user } = useStore();
+const Login: NextPage = () => {
+  const { register, handleSubmit } = useForm<Admin>();
+  const isLoading = useAppStore((state) => state.isLoadingUser);
+  const user = useAppStore((state) => state.user);
+  const loginAdmin = useAppStore((state) => state.loginAdmin);
 
   useEffect(() => {
     console.log('useEffect', user);
   }, []);
 
-  const handleUserLogin: SubmitHandler<formData> = (data) => {
+  const handleUserLogin: SubmitHandler<Admin> = (data) => {
     const { email, password } = data;
     loginAdmin({ email, password });
   };
@@ -77,7 +81,7 @@ const Login = () => {
               _hover={buttonGradient}
               _focus={buttonGradient}
               color={'#000'}
-              isLoading={isLoadingUser}
+              isLoading={isLoading}
             >
               Login
             </Button>
