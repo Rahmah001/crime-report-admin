@@ -24,13 +24,13 @@ import Head from 'next/head';
 import AllCrimesTab from 'src/components/AllCrimesTab/AllCrimesTab';
 
 import { useAppStore } from 'src/store';
-// import { fetchCrimes } from 'src/store/actions';
 
 const Dashboard = () => {
   const fetchCrimes = useAppStore((state) => state.fetchCrimes);
 
   useEffect(() => {
     fetchCrimes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -51,7 +51,7 @@ const Dashboard = () => {
         <HStack>
           <Menu>
             <MenuButton>
-              <Avatar name="Admin Report" size={'sm'} />
+              <Avatar name="Crime Report" size={'sm'} />
             </MenuButton>
             <MenuList>
               <MenuItem>
@@ -66,10 +66,10 @@ const Dashboard = () => {
         <Tabs variant={'soft-rounded'} colorScheme={'purple'}>
           <TabList>
             <Tab fontSize={'sm'}>All Crimes</Tab>
-            {/* <Tab fontSize={'sm'}>Attended Crimes</Tab> */}
+            <Tab fontSize={'sm'}>Attended Crimes</Tab>
           </TabList>
           <TabPanels>
-            <TabPanel>
+            <TabPanel px={0}>
               <AllCrimesTab />
             </TabPanel>
           </TabPanels>
