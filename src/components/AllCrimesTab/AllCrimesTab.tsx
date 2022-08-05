@@ -12,11 +12,13 @@ import {
   Box,
   Text,
   HStack,
+  Button,
 } from '@chakra-ui/react';
 import { DocumentData } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 
 import { useAppStore } from 'src/store';
+import CrimeActions from '../CrimeActions/CrimeActions';
 
 const AllCrimesTab = () => {
   const isLoading = useAppStore((state) => state.isLoadingCrime);
@@ -28,6 +30,7 @@ const AllCrimesTab = () => {
 
   useEffect(() => {
     setCrimesState(crimes);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -41,7 +44,7 @@ const AllCrimesTab = () => {
         </Center>
       )}
       <TableContainer border={'1px solid #EDF2F7'} rounded={'lg'}>
-        <Table variant="striped">
+        <Table variant="simple" size={'sm'}>
           <TableCaption>CrimeReport. Data</TableCaption>
           <Thead p={4}>
             <Tr>
@@ -49,6 +52,7 @@ const AllCrimesTab = () => {
               <Th>Name</Th>
               <Th>Phone Number</Th>
               <Th>Crime</Th>
+              <Th>Actions</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -58,6 +62,9 @@ const AllCrimesTab = () => {
                 <Td>{crime?.name}</Td>
                 <Td>{crime?.phoneNumber}</Td>
                 <Td>{crime?.crime}</Td>
+                <Td>
+                  <CrimeActions crime={crime} />
+                </Td>
               </Tr>
             ))}
           </Tbody>
