@@ -19,7 +19,7 @@ export type AppStore = {
   fetchCrimesAttendedTo: () => void;
   fetchNonAttendedToCrimes: () => void;
   loginAdmin: (user: Admin) => void;
-  EditCrime: (id: string, data: DocumentData, onClose: () => void) => void;
+  editCrime: (id: string, data: DocumentData, onClose: () => void) => void;
 };
 
 export type CrimeProps = {
