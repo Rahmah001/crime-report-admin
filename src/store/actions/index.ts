@@ -11,6 +11,7 @@ import {
   doc,
   DocumentData,
   onSnapshot,
+  deleteDoc,
 } from 'firebase/firestore';
 import { firestoreDb } from 'src/libs';
 import { Admin, StoreActions as Actions } from 'src/types';
@@ -129,16 +130,41 @@ export const StoreActions: Actions = {
       .then(() => {
         useAppStore.setState((state) => ({ ...state, isLoadingEdit: false }));
         console.log('Document successfully updated!');
-        onClose();
         toast.success(`Document successfully updated!`, {
           position: 'bottom-center',
+          duration: 3000,
         });
+        onClose();
       })
       .catch((error: FirestoreError) => {
         useAppStore.setState((state) => ({ ...state, isLoadingEdit: false }));
         console.log(error.message, 'Error');
         toast.error(`${error.message}`, {
           position: 'bottom-center',
+          duration: 3000,
+        });
+      });
+  },
+
+  deleteCrime: async (id: string, onClose: () => void) => {
+    useAppStore.setState((state) => ({ ...state, isLoadingDelete: true }));
+    const crimeDeleteRef = doc(firestoreDb, 'crimes', id);
+    await deleteDoc(crimeDeleteRef)
+      .then(() => {
+        useAppStore.setState((state) => ({ ...state, isLoadingDelete: false }));
+        console.log('Document successfully deleted!');
+        toast.success(`Document successfully deleted!`, {
+          position: 'bottom-center',
+          duration: 3000,
+        });
+        onClose();
+      })
+      .catch((error: FirestoreError) => {
+        useAppStore.setState((state) => ({ ...state, isLoadingDelete: false }));
+        console.log(error.message, 'Error');
+        toast.error(`${error.message}`, {
+          position: 'bottom-center',
+          duration: 3000,
         });
       });
   },
