@@ -13,12 +13,12 @@ import {
   onSnapshot,
 } from 'firebase/firestore';
 import { firestoreDb } from 'src/libs';
-import { Admin } from 'src/types';
+import { Admin, StoreActions as Actions } from 'src/types';
 import { useAppStore } from 'src/store';
 
 import toast from 'react-hot-toast';
 
-export const StoreActions = {
+export const StoreActions: Actions = {
   loginAdmin: ({ email, password }: Admin) => {
     const auth = getAuth();
     useAppStore.setState((state) => ({ ...state, isLoadingUser: true }));
