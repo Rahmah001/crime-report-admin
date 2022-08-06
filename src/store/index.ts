@@ -2,10 +2,10 @@ import create from 'zustand';
 
 import { devtools, persist } from 'zustand/middleware';
 
-import { AppStore } from 'src/types';
+import { AppStore, StoreState } from 'src/types';
 import { StoreActions } from './actions';
 
-const initialState = {
+const initialState: StoreState = {
   crimes: null,
   attendedToCrimes: null,
   nonAttendedToCrimes: null,
@@ -20,7 +20,6 @@ const useAppStore = create<AppStore>()(
     persist(
       (_) => ({
         ...initialState,
-        // methods
         ...StoreActions,
       }),
       {
