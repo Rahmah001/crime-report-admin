@@ -13,26 +13,13 @@ import {
   Text,
   HStack,
 } from '@chakra-ui/react';
-import { DocumentData } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
 
 import { useAppStore } from 'src/store';
 import CrimeActions from '../CrimeActions/CrimeActions';
 
 const AllCrimesTab = () => {
   const isLoading = useAppStore((state) => state.isLoadingCrime);
-  const crimes = useAppStore((state) => state.crimes);
-  const fetchCrimes = useAppStore((state) => state.fetchCrimes);
-
-  const [crimesState, setCrimesState] = useState<DocumentData[] | null | []>(
-    []
-  );
-
-  useEffect(() => {
-    setCrimesState(crimes);
-    fetchCrimes();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchCrimes]);
+  const { crimes } = useAppStore();
 
   return (
     <Box>
@@ -57,7 +44,7 @@ const AllCrimesTab = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {crimesState?.map((crime) => (
+            {crimes?.map((crime) => (
               <Tr key={crime?.id}>
                 <Td>{crime?.email}</Td>
                 <Td>{crime?.name}</Td>
