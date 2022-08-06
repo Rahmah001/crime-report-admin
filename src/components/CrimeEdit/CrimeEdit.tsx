@@ -128,17 +128,15 @@ const CrimeEdit: React.FC<CrimeProps> = ({ crime }) => {
               </SimpleGrid>
             </ModalBody>
             <ModalFooter>
-              <ButtonGroup mt={4} spacing={2}>
-                <Button
-                  colorScheme={'purple'}
-                  size="xs"
-                  type="submit"
-                  variant="solid"
-                  isLoading={isLoadingEdit}
-                >
-                  Update Crime
-                </Button>
-              </ButtonGroup>
+              <Button
+                colorScheme={'purple'}
+                size="xs"
+                type="submit"
+                variant="solid"
+                isLoading={isLoadingEdit}
+              >
+                Update Crime
+              </Button>
             </ModalFooter>
           </form>
         </ModalContent>
