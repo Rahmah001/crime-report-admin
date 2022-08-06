@@ -30,6 +30,7 @@ const CrimeEdit: React.FC<CrimeProps> = ({ crime }) => {
   const { onOpen, onClose, isOpen } = useDisclosure();
   const [isAttendedTo, setIsAttendedTo] = useState<boolean>(crime.isAttendedTo);
 
+  const isLoadingEdit = useAppStore((state) => state.isLoadingEdit);
   const EditCrime = useAppStore((state) => state.editCrime);
 
   const handleCrimeEdit = (data: any) => {
@@ -133,6 +134,7 @@ const CrimeEdit: React.FC<CrimeProps> = ({ crime }) => {
                   size="xs"
                   type="submit"
                   variant="solid"
+                  isLoading={isLoadingEdit}
                 >
                   Edit Crime
                 </Button>
