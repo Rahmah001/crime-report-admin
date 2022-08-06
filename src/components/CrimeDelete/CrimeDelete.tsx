@@ -9,12 +9,19 @@ import {
   ModalCloseButton,
   ModalBody,
   IconButton,
+  ModalFooter,
+  Button,
+  Text,
 } from '@chakra-ui/react';
+
+import { useAppStore } from 'src/store';
 
 import { CrimeProps } from 'src/types';
 
 const CrimeDelete: React.FC<CrimeProps> = ({ crime }) => {
   const { onOpen, onClose, isOpen } = useDisclosure();
+  const isLoadingDelete = useAppStore((state) => state.isLoadingDelete);
+  const DeleteCrime = useAppStore((state) => state.deleteCrime);
 
   return (
     <Box>
@@ -40,6 +47,23 @@ const CrimeDelete: React.FC<CrimeProps> = ({ crime }) => {
             Delete {crime?.name} reported crime on {crime?.crime}
           </ModalHeader>
           <ModalCloseButton size="sm" />
+          <ModalBody>
+            <Text fontSize={'12px'}>
+              Are you sure you want to delete this crime?
+            </Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              colorScheme={'red'}
+              size="xs"
+              type="submit"
+              variant="solid"
+              isLoading={isLoadingDelete}
+              onClick={() => DeleteCrime(crime.id, onClose)}
+            >
+              Delete Crime
+            </Button>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </Box>
