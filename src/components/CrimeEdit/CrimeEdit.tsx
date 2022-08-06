@@ -18,16 +18,19 @@ import {
   Select,
   Checkbox,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 import { crimeType } from 'src/data';
+import { useAppStore } from 'src/store';
 import { CrimeProps } from 'src/types';
 
 const CrimeEdit: React.FC<CrimeProps> = ({ crime }) => {
   const { register, handleSubmit } = useForm();
   const { onOpen, onClose, isOpen } = useDisclosure();
   const [isAttendedTo, setIsAttendedTo] = useState<boolean>(crime.isAttendedTo);
+
+  const EditCrime = useAppStore((state) => state.editCrime);
 
   const handleCrimeEdit = (data: any) => {
     const newData = {
@@ -38,7 +41,9 @@ const CrimeEdit: React.FC<CrimeProps> = ({ crime }) => {
       attendedTo: data.attendedTo,
     };
     console.log(newData);
+    EditCrime(crime.id, newData, onClose);
   };
+
   return (
     <Box>
       <IconButton
@@ -75,7 +80,7 @@ const CrimeEdit: React.FC<CrimeProps> = ({ crime }) => {
                     required: true,
                   })}
                   size={'sm'}
-                  value={crime?.name || ''}
+                  defaultValue={crime?.name || ''}
                   type="text"
                   rounded={'md'}
                   placeholder="Name"
@@ -85,7 +90,7 @@ const CrimeEdit: React.FC<CrimeProps> = ({ crime }) => {
                     pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                   })}
                   size={'sm'}
-                  value={crime?.email || ''}
+                  defaultValue={crime?.email || ''}
                   type="email"
                   rounded={'md'}
                   placeholder="Email Address"
@@ -93,7 +98,7 @@ const CrimeEdit: React.FC<CrimeProps> = ({ crime }) => {
                 <Select
                   {...register('crime')}
                   placeholder="Select crime"
-                  value={crime?.crime || ''}
+                  defaultValue={crime?.crime || ''}
                   rounded={'md'}
                   size={'sm'}
                 >
@@ -104,7 +109,7 @@ const CrimeEdit: React.FC<CrimeProps> = ({ crime }) => {
                 <Input
                   {...register('phoneNumber', {})}
                   size={'sm'}
-                  value={crime?.phoneNumber || ''}
+                  defaultValue={crime?.phoneNumber || ''}
                   type="text"
                   rounded={'md'}
                   placeholder="Name"
@@ -114,6 +119,7 @@ const CrimeEdit: React.FC<CrimeProps> = ({ crime }) => {
                   size={'md'}
                   isChecked={isAttendedTo}
                   onChange={() => setIsAttendedTo(!isAttendedTo)}
+                  defaultChecked={crime?.attendedTo}
                   colorScheme={'pink'}
                 >
                   Crime is attended to?
