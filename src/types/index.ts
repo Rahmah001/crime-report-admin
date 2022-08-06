@@ -12,6 +12,7 @@ export type StoreState = {
   isLoadingCrime: boolean | undefined;
   isLoadingUser: boolean | undefined;
   isLoadingEdit: boolean | undefined;
+  isLoadingDelete: boolean | undefined;
 };
 
 export type StoreActions = {
@@ -20,6 +21,7 @@ export type StoreActions = {
   fetchNonAttendedToCrimes: () => void;
   loginAdmin: (user: Admin) => void;
   editCrime: (id: string, data: DocumentData, onClose: () => void) => void;
+  deleteCrime: (id: string, onClose: () => void) => void;
 };
 
 export type AppStore = StoreState & StoreActions;
