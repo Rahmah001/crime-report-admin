@@ -28,7 +28,7 @@ const CrimeDelete: React.FC<CrimeProps> = ({ crime }) => {
       />
       <Modal
         isCentered
-        size="lg"
+        size="sm"
         onClose={onClose}
         isOpen={isOpen}
         motionPreset="slideInBottom"
