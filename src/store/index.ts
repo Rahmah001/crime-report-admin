@@ -18,13 +18,11 @@ const initialState: StoreState = {
 const useAppStore = create<AppStore>()(
   devtools(
     persist(
-      (_) => ({
+      () => ({
         ...initialState,
         ...StoreActions,
       }),
-      {
-        name: 'app-storage',
-      }
+      { name: 'app-storage' }
     )
   )
 );
