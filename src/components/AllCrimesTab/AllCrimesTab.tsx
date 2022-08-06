@@ -12,7 +12,6 @@ import {
   Box,
   Text,
   HStack,
-  Button,
 } from '@chakra-ui/react';
 import { DocumentData } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
