@@ -136,7 +136,7 @@ const CrimeEdit: React.FC<CrimeProps> = ({ crime }) => {
                   variant="solid"
                   isLoading={isLoadingEdit}
                 >
-                  Edit Crime
+                  Update Crime
                 </Button>
               </ButtonGroup>
             </ModalFooter>
