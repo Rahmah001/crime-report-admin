@@ -29,7 +29,7 @@ import { useAppStore } from 'src/store';
 
 const Dashboard = () => {
   const fetchCrimes = useAppStore((state) => state.fetchCrimes);
-  const crimes = useAppStore((state) => state.crimes);
+  const { crimes } = useAppStore();
   const fetchCrimesAttendedTo = useAppStore(
     (state) => state.fetchCrimesAttendedTo
   );
@@ -38,11 +38,14 @@ const Dashboard = () => {
   );
 
   useEffect(() => {
-    fetchCrimes();
-    fetchCrimesAttendedTo();
-    fetchNonAttendedToCrimes();
+    const unSubscribe = () => {
+      fetchCrimes();
+      fetchCrimesAttendedTo();
+      fetchNonAttendedToCrimes();
+    };
+    return () => unSubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchCrimes, fetchCrimesAttendedTo, fetchNonAttendedToCrimes]);
+  }, []);
 
   return (
     <Container maxWidth={'container.lg'}>
