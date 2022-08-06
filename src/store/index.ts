@@ -13,6 +13,7 @@ const initialState: StoreState = {
   isLoadingUser: false,
   user: null,
   isLoadingEdit: false,
+  isLoadingDelete: false,
 };
 
 const useAppStore = create<AppStore>()(
