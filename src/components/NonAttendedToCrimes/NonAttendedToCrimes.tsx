@@ -18,18 +18,10 @@ import {
 import CrimeActions from 'src/components/CrimeActions/CrimeActions';
 
 import { useAppStore } from 'src/store';
-import { CrimeType } from 'src/types';
 
 const NonAttendedToCrimeTab = () => {
   const isLoading = useAppStore((state) => state.isLoadingCrime);
-  const nonAttendedToCrimes = useAppStore((state) => state.nonAttendedToCrimes);
-
-  const [crimesState, setCrimesState] = useState<CrimeType>([]);
-
-  useEffect(() => {
-    setCrimesState(nonAttendedToCrimes);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { nonAttendedToCrimes } = useAppStore();
 
   return (
     <Box>
@@ -54,7 +46,7 @@ const NonAttendedToCrimeTab = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {crimesState?.map((crime) => (
+            {nonAttendedToCrimes?.map((crime) => (
               <Tr key={crime?.id}>
                 <Td>{crime?.email}</Td>
                 <Td>{crime?.name}</Td>
