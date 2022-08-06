@@ -14,8 +14,8 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <ClientOnly>
       <ChakraProvider theme={theme}>
         <Component {...pageProps} />
+        <Toaster />
       </ChakraProvider>
-      <Toaster />
     </ClientOnly>
   );
 };
