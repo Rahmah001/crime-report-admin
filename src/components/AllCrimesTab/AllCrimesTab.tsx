@@ -22,6 +22,7 @@ import CrimeActions from '../CrimeActions/CrimeActions';
 const AllCrimesTab = () => {
   const isLoading = useAppStore((state) => state.isLoadingCrime);
   const crimes = useAppStore((state) => state.crimes);
+  const fetchCrimes = useAppStore((state) => state.fetchCrimes);
 
   const [crimesState, setCrimesState] = useState<DocumentData[] | null | []>(
     []
@@ -29,8 +30,9 @@ const AllCrimesTab = () => {
 
   useEffect(() => {
     setCrimesState(crimes);
+    fetchCrimes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchCrimes]);
 
   return (
     <Box>
