@@ -18,18 +18,11 @@ import {
 import CrimeActions from 'src/components/CrimeActions/CrimeActions';
 
 import { useAppStore } from 'src/store';
-import { CrimeType } from 'src/types';
 
 const AttendedToCrimeTab = () => {
+  const { crimes } = useAppStore();
   const isLoading = useAppStore((state) => state.isLoadingCrime);
-  const attendedToCrimes = useAppStore((state) => state.attendedToCrimes);
-
-  const [crimesState, setCrimesState] = useState<CrimeType>([]);
-
-  useEffect(() => {
-    setCrimesState(attendedToCrimes);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { attendedToCrimes } = useAppStore();
 
   return (
     <Box>
@@ -54,7 +47,7 @@ const AttendedToCrimeTab = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {crimesState?.map((crime) => (
+            {attendedToCrimes?.map((crime) => (
               <Tr key={crime?.id}>
                 <Td>{crime?.email}</Td>
                 <Td>{crime?.name}</Td>
