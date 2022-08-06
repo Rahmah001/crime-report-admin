@@ -29,7 +29,6 @@ import { useAppStore } from 'src/store';
 
 const Dashboard = () => {
   const fetchCrimes = useAppStore((state) => state.fetchCrimes);
-  const { crimes } = useAppStore();
   const fetchCrimesAttendedTo = useAppStore(
     (state) => state.fetchCrimesAttendedTo
   );
