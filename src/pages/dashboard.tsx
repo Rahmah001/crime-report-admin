@@ -23,20 +23,26 @@ import Head from 'next/head';
 
 import AllCrimesTab from 'src/components/AllCrimesTab/AllCrimesTab';
 import AttendedToCrimesTab from 'src/components/AttendedToCrimesTab/AttendedToCrimesTab';
+import NonAttendedToCrimeTab from 'src/components/NonAttendedToCrimes/NonAttendedToCrimes';
 
 import { useAppStore } from 'src/store';
 
 const Dashboard = () => {
   const fetchCrimes = useAppStore((state) => state.fetchCrimes);
+  const crimes = useAppStore((state) => state.crimes);
   const fetchCrimesAttendedTo = useAppStore(
     (state) => state.fetchCrimesAttendedTo
+  );
+  const fetchNonAttendedToCrimes = useAppStore(
+    (state) => state.fetchNonAttendedToCrimes
   );
 
   useEffect(() => {
     fetchCrimes();
     fetchCrimesAttendedTo();
+    fetchNonAttendedToCrimes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchCrimes, fetchCrimesAttendedTo, fetchNonAttendedToCrimes]);
 
   return (
     <Container maxWidth={'container.lg'}>
@@ -72,6 +78,7 @@ const Dashboard = () => {
           <TabList>
             <Tab fontSize={'sm'}>All Crimes</Tab>
             <Tab fontSize={'sm'}>Attended Crimes</Tab>
+            <Tab fontSize={'sm'}>Non Attended Crimes</Tab>
           </TabList>
           <TabPanels>
             <TabPanel px={0} py={6}>
@@ -79,6 +86,9 @@ const Dashboard = () => {
             </TabPanel>
             <TabPanel px={0} py={6}>
               <AttendedToCrimesTab />
+            </TabPanel>
+            <TabPanel px={0} py={6}>
+              <NonAttendedToCrimeTab />
             </TabPanel>
           </TabPanels>
         </Tabs>
