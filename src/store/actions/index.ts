@@ -39,10 +39,10 @@ export const StoreActions: Actions = {
         });
       });
   },
-  fetchCrimes: async () => {
+  fetchCrimes: () => {
     useAppStore.setState((state) => ({ ...state, isLoadingCrime: true }));
     const crimeQuery = query(collection(firestoreDb, 'crimes'));
-    await onSnapshot(
+    onSnapshot(
       crimeQuery,
       (snapshot) => {
         useAppStore.setState((state) => ({
@@ -55,6 +55,7 @@ export const StoreActions: Actions = {
             return { ...doc.data(), id: doc.id };
           }),
         }));
+        console.log(useAppStore.getState());
       },
       (error) => {
         useAppStore.setState((state) => ({ ...state, isLoadingCrime: false }));
@@ -64,14 +65,15 @@ export const StoreActions: Actions = {
       }
     );
   },
-  fetchCrimesAttendedTo: async () => {
+  fetchCrimesAttendedTo: () => {
     useAppStore.setState((state) => ({ ...state, isLoadingCrime: true }));
     const attentedCrimeQuery = query(
       collection(firestoreDb, 'crimes'),
       where('attendedTo', '==', true)
     );
-    await getDocs(attentedCrimeQuery)
-      .then((snapshot) => {
+    onSnapshot(
+      attentedCrimeQuery,
+      (snapshot) => {
         useAppStore.setState((state) => ({
           ...state,
           isLoadingCrime: false,
@@ -82,13 +84,14 @@ export const StoreActions: Actions = {
             return { ...doc.data(), id: doc.id };
           }),
         }));
-      })
-      .catch((error: FirestoreError) => {
+      },
+      (error) => {
         useAppStore.setState((state) => ({ ...state, isLoadingCrime: false }));
         toast.error(`${error.message}`, {
           position: 'bottom-center',
         });
-      });
+      }
+    );
   },
   fetchNonAttendedToCrimes: async () => {
     useAppStore.setState((state) => ({ ...state, isLoadingCrime: true }));
@@ -96,8 +99,9 @@ export const StoreActions: Actions = {
       collection(firestoreDb, 'crimes'),
       where('attendedTo', '==', false)
     );
-    await getDocs(nonAttendedQuery)
-      .then((snapshot) => {
+    onSnapshot(
+      nonAttendedQuery,
+      (snapshot) => {
         useAppStore.setState((state) => ({
           ...state,
           isLoadingCrime: false,
@@ -108,26 +112,34 @@ export const StoreActions: Actions = {
             return { ...doc.data(), id: doc.id };
           }),
         }));
-      })
-      .catch((error: FirestoreError) => {
+      },
+      (error) => {
         useAppStore.setState((state) => ({ ...state, isLoadingCrime: false }));
         toast.error(`${error.message}`, {
           position: 'bottom-center',
         });
-      });
+      }
+    );
   },
+
   editCrime: async (id: string, data: DocumentData, onClose: () => void) => {
     useAppStore.setState((state) => ({ ...state, isLoadingEdit: true }));
-    const crimeRef = await doc(firestoreDb, 'crimes', id);
+    const crimeRef = doc(firestoreDb, 'crimes', id);
     await setDoc(crimeRef, data)
       .then(() => {
         useAppStore.setState((state) => ({ ...state, isLoadingEdit: false }));
         console.log('Document successfully updated!');
         onClose();
+        toast.success(`Document successfully updated!`, {
+          position: 'bottom-center',
+        });
       })
       .catch((error: FirestoreError) => {
         useAppStore.setState((state) => ({ ...state, isLoadingEdit: false }));
         console.log(error.message, 'Error');
+        toast.error(`${error.message}`, {
+          position: 'bottom-center',
+        });
       });
   },
 };
