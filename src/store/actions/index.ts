@@ -4,7 +4,6 @@ import { getAuth, signInWithEmailAndPassword, AuthError } from 'firebase/auth';
 import {
   query,
   collection,
-  getDocs,
   FirestoreError,
   where,
   setDoc,
@@ -26,8 +25,11 @@ export const StoreActions: Actions = {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        useAppStore.setState((state) => ({ ...state, user: user }));
-        useAppStore.setState((state) => ({ ...state, isLoadingUser: false }));
+        useAppStore.setState((state) => ({
+          ...state,
+          isLoadingUser: false,
+          user: user,
+        }));
         toast.success('Login successful', {
           position: 'bottom-center',
         });
@@ -49,9 +51,6 @@ export const StoreActions: Actions = {
         useAppStore.setState((state) => ({
           ...state,
           isLoadingCrime: false,
-        }));
-        useAppStore.setState((state) => ({
-          ...state,
           crimes: snapshot?.docs.map((doc) => {
             return { ...doc.data(), id: doc.id };
           }),
@@ -78,9 +77,6 @@ export const StoreActions: Actions = {
         useAppStore.setState((state) => ({
           ...state,
           isLoadingCrime: false,
-        }));
-        useAppStore.setState((state) => ({
-          ...state,
           attendedToCrimes: snapshot?.docs.map((doc) => {
             return { ...doc.data(), id: doc.id };
           }),
@@ -106,9 +102,6 @@ export const StoreActions: Actions = {
         useAppStore.setState((state) => ({
           ...state,
           isLoadingCrime: false,
-        }));
-        useAppStore.setState((state) => ({
-          ...state,
           nonAttendedToCrimes: snapshot?.docs.map((doc) => {
             return { ...doc.data(), id: doc.id };
           }),
