@@ -4,6 +4,7 @@ import {
   Avatar,
   Badge,
   Box,
+  Button,
   Container,
   Heading,
   HStack,
@@ -36,13 +37,11 @@ const Dashboard = () => {
     (state) => state.fetchNonAttendedToCrimes
   );
 
-  useEffect(() => {
-    fetchCrimes();
-    fetchCrimesAttendedTo();
-    fetchNonAttendedToCrimes();
+  const logoutAdmin = useAppStore((state) => state.logoutAdmin);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  fetchCrimes();
+  fetchCrimesAttendedTo();
+  fetchNonAttendedToCrimes();
 
   return (
     <Container maxWidth={'container.lg'}>
@@ -64,9 +63,12 @@ const Dashboard = () => {
             <MenuButton>
               <Avatar name="Crime Report" size={'sm'} />
             </MenuButton>
-            <MenuList>
+            <MenuList fontSize="13px">
               <MenuItem>
                 <Text>admin@crime-report.com</Text>
+              </MenuItem>
+              <MenuItem color={'red.400'} onClick={logoutAdmin}>
+                Logout Admin
               </MenuItem>
             </MenuList>
           </Menu>
