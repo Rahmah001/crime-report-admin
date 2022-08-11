@@ -55,7 +55,6 @@ export const StoreActions: Actions = {
             return { ...doc.data(), id: doc.id };
           }),
         }));
-        console.log(useAppStore.getState());
       },
       (error) => {
         useAppStore.setState((state) => ({ ...state, isLoadingCrime: false }));
@@ -122,7 +121,6 @@ export const StoreActions: Actions = {
     await setDoc(crimeRef, data)
       .then(() => {
         useAppStore.setState((state) => ({ ...state, isLoadingEdit: false }));
-        console.log('Document successfully updated!');
         toast.success(`Document successfully updated!`, {
           position: 'bottom-center',
           duration: 3000,
@@ -131,7 +129,6 @@ export const StoreActions: Actions = {
       })
       .catch((error: FirestoreError) => {
         useAppStore.setState((state) => ({ ...state, isLoadingEdit: false }));
-        console.log(error.message, 'Error');
         toast.error(`${error.message}`, {
           position: 'bottom-center',
           duration: 3000,
@@ -145,7 +142,6 @@ export const StoreActions: Actions = {
     await deleteDoc(crimeDeleteRef)
       .then(() => {
         useAppStore.setState((state) => ({ ...state, isLoadingDelete: false }));
-        console.log('Document successfully deleted!');
         toast.success(`Document successfully deleted!`, {
           position: 'bottom-center',
           duration: 3000,
@@ -154,7 +150,6 @@ export const StoreActions: Actions = {
       })
       .catch((error: FirestoreError) => {
         useAppStore.setState((state) => ({ ...state, isLoadingDelete: false }));
-        console.log(error.message, 'Error');
         toast.error(`${error.message}`, {
           position: 'bottom-center',
           duration: 3000,

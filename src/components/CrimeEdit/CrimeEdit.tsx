@@ -41,7 +41,6 @@ const CrimeEdit: React.FC<CrimeProps> = ({ crime }) => {
       phoneNumber: data.phoneNumber,
       attendedTo: data.attendedTo,
     };
-    console.log(newData);
     EditCrime(crime.id, newData, onClose);
   };
 
