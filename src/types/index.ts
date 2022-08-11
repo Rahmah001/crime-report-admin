@@ -22,6 +22,7 @@ export type StoreActions = {
   loginAdmin: (user: Admin) => void;
   editCrime: (id: string, data: DocumentData, onClose: () => void) => void;
   deleteCrime: (id: string, onClose: () => void) => void;
+  logoutAdmin: () => void;
 };
 
 export type AppStore = StoreState & StoreActions;

@@ -1,6 +1,11 @@
 import Router from 'next/router';
 
-import { getAuth, signInWithEmailAndPassword, AuthError } from 'firebase/auth';
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  AuthError,
+  signOut,
+} from 'firebase/auth';
 import {
   query,
   collection,
@@ -14,7 +19,7 @@ import {
 } from 'firebase/firestore';
 import { firestoreDb } from 'src/libs';
 import { Admin, StoreActions as Actions } from 'src/types';
-import { useAppStore } from 'src/store';
+import { initialState, useAppStore } from 'src/store';
 
 import toast from 'react-hot-toast';
 
@@ -58,9 +63,6 @@ export const StoreActions: Actions = {
       },
       (error) => {
         useAppStore.setState((state) => ({ ...state, isLoadingCrime: false }));
-        toast.error(`${error.message}`, {
-          position: 'bottom-center',
-        });
       }
     );
   },
@@ -83,9 +85,6 @@ export const StoreActions: Actions = {
       },
       (error) => {
         useAppStore.setState((state) => ({ ...state, isLoadingCrime: false }));
-        toast.error(`${error.message}`, {
-          position: 'bottom-center',
-        });
       }
     );
   },
@@ -108,9 +107,6 @@ export const StoreActions: Actions = {
       },
       (error) => {
         useAppStore.setState((state) => ({ ...state, isLoadingCrime: false }));
-        toast.error(`${error.message}`, {
-          position: 'bottom-center',
-        });
       }
     );
   },
@@ -153,6 +149,22 @@ export const StoreActions: Actions = {
         toast.error(`${error.message}`, {
           position: 'bottom-center',
           duration: 3000,
+        });
+      });
+  },
+
+  logoutAdmin: () => {
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        useAppStore.setState(() => ({
+          ...initialState,
+        }));
+        Router.push('/');
+      })
+      .catch((error: AuthError) => {
+        toast.error(`${error.message}`, {
+          position: 'bottom-center',
         });
       });
   },
