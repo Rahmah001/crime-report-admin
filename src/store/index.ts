@@ -5,7 +5,7 @@ import { devtools, persist } from 'zustand/middleware';
 import { AppStore, StoreState } from 'src/types';
 import { StoreActions } from './actions';
 
-const initialState: StoreState = {
+export const initialState: StoreState = {
   crimes: null,
   attendedToCrimes: null,
   nonAttendedToCrimes: null,
