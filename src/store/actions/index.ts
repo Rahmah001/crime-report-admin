@@ -63,6 +63,7 @@ export const StoreActions: Actions = {
       },
       (error) => {
         useAppStore.setState((state) => ({ ...state, isLoadingCrime: false }));
+        console.log(error.message);
       }
     );
   },
@@ -85,6 +86,7 @@ export const StoreActions: Actions = {
       },
       (error) => {
         useAppStore.setState((state) => ({ ...state, isLoadingCrime: false }));
+        console.log(error.message);
       }
     );
   },
@@ -107,6 +109,7 @@ export const StoreActions: Actions = {
       },
       (error) => {
         useAppStore.setState((state) => ({ ...state, isLoadingCrime: false }));
+        console.log(error.message);
       }
     );
   },

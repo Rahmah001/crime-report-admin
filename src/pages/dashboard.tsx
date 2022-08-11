@@ -39,9 +39,18 @@ const Dashboard = () => {
 
   const logoutAdmin = useAppStore((state) => state.logoutAdmin);
 
-  fetchCrimes();
-  fetchCrimesAttendedTo();
-  fetchNonAttendedToCrimes();
+  useEffect(() => {
+    let subscribe = true;
+    if (subscribe) {
+      fetchCrimes();
+      fetchCrimesAttendedTo();
+      fetchNonAttendedToCrimes();
+    }
+
+    return () => {
+      subscribe = false;
+    };
+  });
 
   return (
     <Container maxWidth={'container.lg'}>
