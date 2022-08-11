@@ -37,12 +37,10 @@ const Dashboard = () => {
   );
 
   useEffect(() => {
-    const unSubscribe = () => {
-      fetchCrimes();
-      fetchCrimesAttendedTo();
-      fetchNonAttendedToCrimes();
-    };
-    return () => unSubscribe();
+    fetchCrimes();
+    fetchCrimesAttendedTo();
+    fetchNonAttendedToCrimes();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
