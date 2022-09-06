@@ -12,6 +12,7 @@ import {
   Box,
   Text,
   HStack,
+  useColorModeValue,
 } from '@chakra-ui/react';
 
 import { useAppStore } from 'src/store';
@@ -31,7 +32,10 @@ const AllCrimesTab = () => {
           </HStack>
         </Center>
       )}
-      <TableContainer border={'1px solid #EDF2F7'} rounded={'lg'}>
+      <TableContainer
+        border={useColorModeValue('1px solid #EDF2F7', '')}
+        rounded={'lg'}
+      >
         <Table variant="simple" size={'sm'}>
           <TableCaption>CrimeReport. Data</TableCaption>
           <Thead p={4}>
