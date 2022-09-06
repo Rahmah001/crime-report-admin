@@ -19,6 +19,7 @@ import {
   TabPanels,
   Tabs,
   Text,
+  useColorMode,
 } from '@chakra-ui/react';
 import Head from 'next/head';
 
@@ -29,6 +30,7 @@ import NonAttendedToCrimeTab from 'src/components/NonAttendedToCrimes/NonAttende
 import { useAppStore } from 'src/store';
 
 const Dashboard = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
   const fetchCrimes = useAppStore((state) => state.fetchCrimes);
   const fetchCrimesAttendedTo = useAppStore(
     (state) => state.fetchCrimesAttendedTo
@@ -81,6 +83,9 @@ const Dashboard = () => {
               </MenuItem>
             </MenuList>
           </Menu>
+          <Button size={'xs'} onClick={toggleColorMode}>
+            {colorMode === 'light' ? 'Dark mode' : 'Light mode'}
+          </Button>
         </HStack>
       </HStack>
 
