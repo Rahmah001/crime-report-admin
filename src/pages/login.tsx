@@ -10,6 +10,7 @@ import {
   FormControl,
   FormLabel,
   Input,
+  useColorMode,
 } from '@chakra-ui/react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -23,6 +24,8 @@ import { overlayBg, bgGradient, buttonGradient } from 'src/constants';
 
 const Login: NextPage = () => {
   const { register, handleSubmit } = useForm<Admin>();
+  const { colorMode } = useColorMode();
+  const inputBg = colorMode === 'dark' ? 'inherit' : 'white';
   const isLoading = useAppStore((state) => state.isLoadingUser);
   const loginAdmin = useAppStore((state) => state.loginAdmin);
 
@@ -44,7 +47,7 @@ const Login: NextPage = () => {
           <FormControl my={3}>
             <FormLabel color={'white'}>Admin Email Address</FormLabel>
             <Input
-              bgColor={'white'}
+              bgColor={inputBg}
               borderRadius={'md'}
               type="email"
               {...register('email', {
@@ -57,7 +60,7 @@ const Login: NextPage = () => {
           <FormControl my={3}>
             <FormLabel color={'white'}>Admin Password</FormLabel>
             <Input
-              bgColor={'white'}
+              bgColor={inputBg}
               borderRadius={'md'}
               type="password"
               {...register('password', {
